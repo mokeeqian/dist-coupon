@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: dist-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user_route
+          uri: lb://dist-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+        - id: voucher_route
+          uri: lb://dist-voucher
+          predicates:
+            - Path=/api/voucher/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+server:
+  port: 88
