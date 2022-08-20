@@ -49,7 +49,7 @@ public class UserController {
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("user:user:info")
     public R info(@PathVariable("id") String id){
-		UserEntity user = userService.getById(id);
+		UserEntity user = userService.findById(id);
 
         return R.ok().put("user", user);
     }

@@ -15,6 +15,13 @@ import java.util.Map;
  */
 public interface UserService extends IService<UserEntity> {
 
+    /**
+     * 分页查询
+     * @param params
+     * @return
+     */
     PageUtils queryPage(Map<String, Object> params);
+
+    UserEntity findById(String id);
 }
 
