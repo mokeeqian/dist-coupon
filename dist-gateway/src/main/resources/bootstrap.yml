@@ -15,13 +15,22 @@ spring:
 #            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
             - StripPrefix=1
 
-        - id: voucher_route
-          uri: lb://dist-voucher
+        - id: coupon_meta_route
+          uri: lb://dist-coupon-meta
           predicates:
-            - Path=/api/voucher/**
+            - Path=/api/voucher/meta/**
           filters:
 #            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
             - StripPrefix=1
+
+        - id: coupon_record_route
+          uri: lb://dist-coupon-record
+          predicates:
+            - Path=/api/voucher/record/**
+          filters:
+            #            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+            - StripPrefix=1
+
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848

@@ -1,23 +1,25 @@
 package cn.edu.xmu.user.service.impl;
 
-import cn.edu.xmu.common.utils.BeanUtils;
+import cn.edu.xmu.common.contant.Constant;
+import cn.edu.xmu.common.utils.*;
+import cn.edu.xmu.user.param.AccountParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.edu.xmu.common.utils.PageUtils;
-import cn.edu.xmu.common.utils.Query;
 
 import cn.edu.xmu.user.dao.UserDao;
 import cn.edu.xmu.user.entity.UserEntity;
 import cn.edu.xmu.user.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("userService")
@@ -65,6 +67,28 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         if ( null == rst ) throw new RuntimeException("账户不存在");
         rst.setType(typeMap.get(rst.getType()));
         return BeanUtils.toBean(rst, UserEntity.class);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UserEntity addAccount(AccountParam accountParam) {
+        String name = accountParam.getName();
+        String type = accountParam.getType();
+        if ( !typeMap.containsKey(type) ) throw new RuntimeException("账户类型非法");
+
+        Date openTime = new Date();
+        String year = DateUtils.fromDate(openTime, "yyyy");
+
+        String uid = type + year + SnowUtils.generateId();
+        UserEntity user = new UserEntity();
+        user.setId(uid);
+        user.setType(type);
+        user.setName(name);
+        user.setYear(year);
+        user.setCreateTime(openTime);
+        user.setUpdateTime(openTime);
+        this.baseMapper.insert(user);
+        return BeanUtils.toBean(user, UserEntity.class);
     }
 
     private UserEntity find(String id) {

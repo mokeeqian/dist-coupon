@@ -1,5 +1,6 @@
 package cn.edu.xmu.user.service;
 
+import cn.edu.xmu.user.param.AccountParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.edu.xmu.common.utils.PageUtils;
 import cn.edu.xmu.user.entity.UserEntity;
@@ -23,5 +24,7 @@ public interface UserService extends IService<UserEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     UserEntity findById(String id);
+
+    UserEntity addAccount(AccountParam accountParam);
 }
 

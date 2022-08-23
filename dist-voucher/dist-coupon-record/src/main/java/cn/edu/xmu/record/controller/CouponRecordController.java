@@ -26,7 +26,7 @@ import cn.edu.xmu.common.utils.R;
  * @date 2022-08-23 12:08:21
  */
 @RestController
-@RequestMapping("record/couponrecord")
+@RequestMapping("voucher/record/")
 public class CouponRecordController {
     @Autowired
     private CouponRecordService couponRecordService;

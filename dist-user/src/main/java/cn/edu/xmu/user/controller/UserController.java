@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import cn.edu.xmu.user.param.AccountParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,9 +61,8 @@ public class UserController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("user:user:save")
-    public R save(@RequestBody UserEntity user){
-		userService.save(user);
-
+    public R save(@Validated  @RequestBody AccountParam accountParam){
+        userService.addAccount(accountParam);
         return R.ok();
     }
 

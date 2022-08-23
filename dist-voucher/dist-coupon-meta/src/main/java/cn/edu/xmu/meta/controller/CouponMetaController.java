@@ -26,7 +26,7 @@ import cn.edu.xmu.common.utils.R;
  * @date 2022-08-23 12:01:05
  */
 @RestController
-@RequestMapping("meta/couponmeta")
+@RequestMapping("voucher/meta/")
 public class CouponMetaController {
     @Autowired
     private CouponMetaService couponMetaService;
