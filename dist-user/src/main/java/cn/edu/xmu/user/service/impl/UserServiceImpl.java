@@ -73,10 +73,16 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         wrapper.eq(UserEntity::getType, id.substring(0, 2));
         // 再查年份，路由到不同的表
         wrapper.eq(UserEntity::getYear, id.substring(2, 6));
+        // 最后再在查id
         wrapper.eq((UserEntity::getId), id);
         return this.baseMapper.selectOne(wrapper);
     }
 
+    /**
+     * 检查账户合法性
+     * @param id
+     * @return
+     */
     private boolean checkAccount(String id) {
         if ( StringUtils.isEmpty(id) || id.length() != 24 ) return false;
         if ( !typeMap.containsKey(id.substring(0, 2)) ) return false;

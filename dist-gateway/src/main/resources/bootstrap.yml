@@ -2,6 +2,9 @@ spring:
   application:
     name: dist-gateway
   cloud:
+    # 配置优先使用本机ip网段，而不是虚拟机ip
+    inetutils:
+      preferred-networks: 192.168.0
     gateway:
       routes:
         - id: user_route
@@ -9,14 +12,16 @@ spring:
           predicates:
             - Path=/api/user/**
           filters:
-            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+#            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+            - StripPrefix=1
 
         - id: voucher_route
           uri: lb://dist-voucher
           predicates:
             - Path=/api/voucher/**
           filters:
-            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+#            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+            - StripPrefix=1
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
