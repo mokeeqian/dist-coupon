@@ -15,7 +15,7 @@
         <module>dist-gateway</module>
         <module>dist-user</module>
         <module>dist-voucher</module>
-        <module>dist-api</module>
+<!--        <module>dist-api</module>-->
     </modules>
 
     <properties>

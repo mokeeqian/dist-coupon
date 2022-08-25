@@ -1,6 +1,7 @@
 package cn.edu.xmu.user.service;
 
-import cn.edu.xmu.user.param.AccountParam;
+import cn.edu.xmu.user.model.dto.CouponRecordDTO;
+import cn.edu.xmu.user.model.param.AccountParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.edu.xmu.common.utils.PageUtils;
 import cn.edu.xmu.user.entity.UserEntity;
@@ -23,8 +24,17 @@ public interface UserService extends IService<UserEntity> {
      */
     PageUtils queryPage(Map<String, Object> params);
 
+    /**
+     * 根据id查找，支持分库分表
+     * @param id
+     * @return
+     */
     UserEntity findById(String id);
 
-    UserEntity addAccount(AccountParam accountParam);
+    /**
+     * 账户新增
+     * @param accountParam
+     */
+    void addAccount(AccountParam accountParam);
 }
 

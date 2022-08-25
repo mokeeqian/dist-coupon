@@ -1,17 +1,16 @@
 package cn.edu.xmu.user.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import cn.edu.xmu.user.param.AccountParam;
+import cn.edu.xmu.user.feign.CouponMetaFeign;
+import cn.edu.xmu.user.feign.CouponRecordFeign;
+import cn.edu.xmu.user.model.param.AccountParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.edu.xmu.user.entity.UserEntity;
 import cn.edu.xmu.user.service.UserService;
@@ -32,6 +31,12 @@ import cn.edu.xmu.common.utils.R;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CouponMetaFeign couponMetaFeign;
+
+    @Autowired
+    private CouponRecordFeign couponRecordFeign;
 
     /**
      * 列表
@@ -87,5 +92,16 @@ public class UserController {
 
         return R.ok();
     }
+
+    // 测试远程调用 couponMetaFeign，获取优惠券模板库存
+    @GetMapping("/test")
+    public R test() {
+        Map<String, Object> param = new HashMap<>();
+        param.put("metaId", "6317836172678312");
+        R stock = couponMetaFeign.subStock(param);
+
+        return R.ok().put("stock", stock);
+    }
+
 
 }

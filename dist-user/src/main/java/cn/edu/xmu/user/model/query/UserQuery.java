@@ -1,4 +1,4 @@
-package cn.edu.xmu.user.query;
+package cn.edu.xmu.user.model.query;
 
 import lombok.Data;
 

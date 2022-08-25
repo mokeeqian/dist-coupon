@@ -1,8 +1,8 @@
 package cn.edu.xmu.user.service.impl;
 
-import cn.edu.xmu.common.contant.Constant;
 import cn.edu.xmu.common.utils.*;
-import cn.edu.xmu.user.param.AccountParam;
+import cn.edu.xmu.user.model.dto.CouponRecordDTO;
+import cn.edu.xmu.user.model.param.AccountParam;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -35,6 +35,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         typeMap.put("02", "个人定期");
         typeMap.put("03", "对公户");
     }
+
+//    @Autowired
+//    private CouponRecordDao couponRecordDao;
+
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -71,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserEntity addAccount(AccountParam accountParam) {
+    public void addAccount(AccountParam accountParam) {
         String name = accountParam.getName();
         String type = accountParam.getType();
         if ( !typeMap.containsKey(type) ) throw new RuntimeException("账户类型非法");
@@ -88,7 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         user.setCreateTime(openTime);
         user.setUpdateTime(openTime);
         this.baseMapper.insert(user);
-        return BeanUtils.toBean(user, UserEntity.class);
+        BeanUtils.toBean(user, UserEntity.class);
     }
 
     private UserEntity find(String id) {

@@ -1,5 +1,11 @@
 package cn.edu.xmu.record.service.impl;
 
+import cn.edu.xmu.common.utils.R;
+import cn.edu.xmu.common.utils.SnowUtils;
+import cn.edu.xmu.meta.dao.CouponMetaDao;
+import cn.edu.xmu.meta.entity.CouponMetaEntity;
+import cn.edu.xmu.record.param.RecordParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,5 +31,4 @@ public class CouponRecordServiceImpl extends ServiceImpl<CouponRecordDao, Coupon
 
         return new PageUtils(page);
     }
-
 }

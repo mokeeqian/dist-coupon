@@ -5,11 +5,7 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.edu.xmu.meta.entity.CouponMetaEntity;
 import cn.edu.xmu.meta.service.CouponMetaService;
@@ -52,6 +48,25 @@ public class CouponMetaController {
 		CouponMetaEntity couponMeta = couponMetaService.getById(id);
 
         return R.ok().put("couponMeta", couponMeta);
+    }
+
+    // 测试
+    @PostMapping("/getStock")
+    public R getStock(@RequestBody Map<String, Object> params) {
+        String metaId = (String) params.get("metaId");
+        CouponMetaEntity couponMeta = couponMetaService.getById(metaId);
+        return R.ok().put("stock", couponMeta);
+    }
+
+    @PostMapping("subStock")
+    public R subStock(@RequestBody Map<String, Object> params) {
+        String metaId = (String) params.get("metaId");
+
+        CouponMetaEntity couponMeta = couponMetaService.getById(metaId);
+        couponMeta.setTotalStock(couponMeta.getTotalStock()-1);
+        couponMetaService.updateById(couponMeta);
+
+        return R.ok().put("stock", couponMeta);
     }
 
     /**

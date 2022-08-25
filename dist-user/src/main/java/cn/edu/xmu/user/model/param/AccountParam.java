@@ -1,4 +1,4 @@
-package cn.edu.xmu.user.param;
+package cn.edu.xmu.user.model.param;
 
 import lombok.Data;
 
